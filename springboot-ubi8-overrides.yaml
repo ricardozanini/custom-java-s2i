@@ -1,0 +1,39 @@
+schema_version: 1
+
+name: "quay.io/ricardozanini/springboot-ubi8"
+description: "Runtime image for Java application based on SpringBoot"
+
+labels:
+- name: "io.k8s.description"
+  value: "Runtime image for Java application based on SpringBoot"
+- name: "io.k8s.display-name"
+  value: "Java application based on SpringBoot"
+- name: "io.openshift.tags"
+  value: "builder,runtime,springboot"
+- name: "io.openshift.s2i.assemble-input-files"
+  value: "/home/spring/bin"
+
+envs:
+- name: JAVA_OPTIONS
+  example: "-Ddebug=true"
+  description: JVM options passed to the Java command.
+- name: S2I_SOURCE_DEPLOYMENTS_FILTER
+  value: "*.jar"
+  example: "*.jar"
+  description: "File filter for java binaries"
+  
+ports:
+- value: 8080
+
+modules:
+  install:
+  - name: install-rpm-dependencies
+  - name: add-user
+  - name: java-openjdk
+    version: "1.8.0-headless"
+  - name: springboot-ubi8
+
+# s2i build . quay.io/ricardozanini/springboot-ubi8-s2i:latest springboot-test:10.0 --runtime-image quay.io/ricardozanini/springboot-ubi8:latest
+run:
+  workdir: "/home/spring"
+

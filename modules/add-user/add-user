@@ -1,0 +1,4 @@
+#!/bin/sh
+
+groupadd -r ${USER} -g 1001 && useradd -u 1001 -r -g 1001 -m -d ${SPRING_HOME} -s /sbin/nologin -c "Spring user" ${USER}
+

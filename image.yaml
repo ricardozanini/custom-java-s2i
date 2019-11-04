@@ -1,0 +1,27 @@
+schema_version: 1
+
+name: "image-real-name-on-overrides-file"
+version: "0.1.0"
+from: "registry.redhat.io/ubi8-minimal:latest"
+
+labels:
+- name: "maintainer"
+  value: "Ricardo Zanini"
+- name: "io.openshift.s2i.scripts-url"
+  value: "image:///usr/local/s2i"
+- name: "io.openshift.s2i.destination"
+  value: "/tmp"
+- name: "io.openshift.expose-services"
+  value: "8080:http"
+
+modules:
+  repositories:
+  - path: modules
+
+packages:
+  manager: microdnf
+
+run:
+  user: 1001
+  cmd:
+  - "/usr/local/s2i/run"

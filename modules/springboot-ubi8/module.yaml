@@ -1,0 +1,5 @@
+schema_version: 1
+version: "0.1.0"
+name: springboot-ubi8
+execute:
+  - script: configure

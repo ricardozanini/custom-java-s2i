@@ -1,0 +1,38 @@
+schema_version: 1
+
+name: "quay.io/ricardozanini/springboot-ubi8-s2i"
+description: "Platform for building Java application based on SpringBoot"
+
+labels:
+- name: "io.k8s.description"
+  value: "Platform for building Java application based on SpringBoot"
+- name: "io.k8s.display-name"
+  value: "Custom Java s2i based on SpringBoot"
+- name: "io.openshift.tags"
+  value: "builder,springboot"
+
+envs:
+- name: JAVA_OPTIONS
+  example: "-Ddebug=true"
+  description: JVM options passed to the Java command.
+- name: MAVEN_ARGS_APPEND
+  example: "-pl mymodule -am"
+  description: Additional Maven arguments
+- name: ARTIFACT_DIR
+  example: mymodule/target
+  description:  Path to target/ where the jar files are created for multi-module builds
+- name: S2I_SOURCE_DEPLOYMENTS_FILTER
+  value: "*.jar"
+  example: "*.jar"
+  description: "File filter for java binaries"
+
+modules:
+  install:
+  - name: install-rpm-dependencies
+  - name: add-user
+  - name: launch
+  - name: maven
+    version: "3.6.0"
+  - name: java-openjdk
+    version: "1.8.0"
+  - name: springboot-ubi8-s2i

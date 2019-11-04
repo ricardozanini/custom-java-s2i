@@ -1,0 +1,12 @@
+schema_version: 1
+version: "0.1.0"
+name: add-user
+execute:
+- script: add-user
+
+envs:
+- name: "SPRING_HOME"
+  value: "/home/spring"
+- name: "USER"
+  value: "spring"
+
